@@ -51,7 +51,6 @@ Nos quedaría la estructura de la siguiente forma en el explorador:
       └── 📄welcome.html
 ```
 
-
 Escribimos contenido en la plantillas:
 
 ```html
@@ -88,7 +87,7 @@ Habilitar las 3 urls distintas con una plantilla básica que muestre solo texto,
 - Mostrar el texto “acerca” en la ruta /acerca
 - Mostrar el texto “bienvenido cliente” en la ruta /bienvenido
 
-Una vez realizado, ejecuta el sitio web con `python manage.py runserver`. 
+Una vez realizado, ejecuta el sitio web con `python manage.py runserver`.
 
 ```py
 # web/views.py
@@ -103,6 +102,7 @@ def acerca(request):
 def bienvenido(request):
     return render(request, 'welcome.html', {})
 ```
+
 ```py
 # onlyflans/urls.py
 from django.contrib import admin
@@ -125,17 +125,14 @@ Crear una plantilla base llamada base.html que contenga los elementos comunes a 
 - Mostrar el texto “navbar” en el lugar donde iría la barra de navegación
 - Mostrar el texto “footer” en el lugar donde iría el footer
 
-Debes valerte de estructura como `<div>` para separar los distintos elementos y agregar un color de fondo para guiar mejor la estructura general. 
-
+Debes valerte de estructura como `<div>` para separar los distintos elementos y agregar un color de fondo para guiar mejor la estructura general.
 
 ```html
 <!-- templates/base.html -->
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <title>
-     {% block title %}OnlyFlans{% endblock %}
-    </title>
+    <title>{% block title %}OnlyFlans{% endblock %}</title>
   </head>
   <body>
     <div style="background: red">header</div>
@@ -146,18 +143,13 @@ Debes valerte de estructura como `<div>` para separar los distintos elementos y 
 </html>
 
 <!-- templates/index.html -->
-{% extends "base.html" %}
-{% block title %}Índice{% endblock %}
+{% extends "base.html" %} {% block title %}Índice{% endblock %}
 
 <!-- templates/about.html -->
-{% extends "base.html" %}
-{% block title %}Acerca{% endblock %}
+{% extends "base.html" %} {% block title %}Acerca{% endblock %}
 
 <!-- templates/welcome.html -->
-{% extends "base.html" %}
-{% block title %}
-Bienvenido
-{% endblock %}
+{% extends "base.html" %} {% block title %} Bienvenido {% endblock %}
 ```
 
 Visitamos las siguientes url:
@@ -172,7 +164,6 @@ Crear las vistas y plantillas personalizadas, añadiendo componentes de bootstra
 
 “Instalar” bootstrap a través de la plantilla inicial de bootstrap en la plantilla base, complementando su estructura <body> con lo que ya existe en el archivo. Luego cambiamos el contenido de la estructura <title> por “Bienvenido a onlyflans”.
 Utilizar ya sea el sistema de grilla o la clase container al contenido de la web en el archivo base.html.
-
 
 ```html
 <!-- templates/base.html -->
@@ -219,14 +210,21 @@ TEMPLATES = [
 <!-- web/templates/includes/navbar.html -->
 <nav class="navbar navbar-expand-lg bg-body">
   <div class="container-fluid">
-    <button class="navbar-toggler" 
-      type="button" data-bs-target="#navbar"
-      data-bs-toggle="collapse" aria-controls="navbar" aria-exp=…>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-target="#navbar"
+      data-bs-toggle="collapse"
+      aria-controls="navbar"
+      aria-exp="…"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbar">
       <div class="navbar-nav me-auto mb-2 mb-lg-0">
-        <a class="nav-link" aria-current="page" href="{% url 'indice' %}">Índice</a>
+        <a class="nav-link" aria-current="page" href="{% url 'indice' %}"
+          >Índice</a
+        >
         <a class="nav-link" href="{% url 'acerca' %}">Acerca</a>
         <a class="nav-link" href="{% url 'bienvenido' %}">Bienvenido</a>
       </div>
@@ -238,11 +236,12 @@ TEMPLATES = [
 <!DOCTYPE html>
 <html lang="es">
   <head>
-   ...
+    ...
   </head>
   <body>
-   ...
-   {% include "navbar.html" %}
+    ... {% include "navbar.html" %}
   </body>
 </html>
 ```
+
+[Presentación](https://docs.google.com/presentation/d/e/2PACX-1vSaD7q6_fh7WwCbg_WvvSEe-JDYyaPbstMjl00M2cL4GxWTCZJ2SuzS83I7HB_JfS1BrYhIdtuS-840/embed?start=false&loop=false&delayms=3000&slide=id.g2eb73829bee_2_17)
