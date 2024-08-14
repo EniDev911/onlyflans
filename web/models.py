@@ -17,3 +17,9 @@ class Flan(models.Model):
 
   def __str__(self):
     return f"{self.name}:{self.is_private}"
+
+class ContactForm(models.Model):
+  contact_form_uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+  contact_form_email = models.EmailField(max_length=100)
+  contact_form_name = models.CharField(max_length=64)
+  message = models.TextField()
