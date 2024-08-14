@@ -11,7 +11,7 @@ class Flan(models.Model):
   is_private = models.BooleanField()
   
   def save(self, *args, **kwargs):
-    if not self.slug:
+    if not self.slug.strip():
       self.slug = slugify(self.name)
     super(Flan, self).save(*args, **kwargs)
 
