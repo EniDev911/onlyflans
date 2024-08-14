@@ -1,0 +1,57 @@
+[
+    {
+        "model": "web.flan",
+        "pk": 1,
+        "fields": {
+            "name": "Flan Dorado del Edén",
+            "image_url": "https://github.com/EniDev911/assets/blob/main/images/flans/flan1.svg?raw=true",
+            "description": "Sumérgete en una experiencia celestial con el Flan Dorado del Edén, un postre que combina la suavidad sedosa de un flan clásico con un toque dorado de caramelo exquisito. Este flan tiene una textura aterciopelada que se deshace en tu boca, con un delicado sabor a vainilla y un caramelo profundo y dorado que le da un acabado perfecto. Ideal para cerrar una comida con elegancia, este postre es un verdadero festín para los sentidos que te transportará al paraíso con cada bocado. ¡Una dulce indulgencia que convierte cualquier ocasión en una celebración!",
+            "is_private": false,
+            "slug": "flan-dorado-del-eden"
+        }
+    },
+    {
+        "model": "web.flan",
+        "pk": 2,
+        "fields": {
+            "name": "Flan de Mora Encantada",
+            "image_url": "https://github.com/EniDev911/assets/blob/main/images/flans/flan2.jpg?raw=true",
+            "description": "Déjate seducir por la magia del Flan de Mora Encantada, una obra maestra de dulzura y elegancia. Este flan combina la suavidad de un flan tradicional con el vibrante sabor de moras frescas, creando una experiencia celestial en cada bocado. La capa superior de caramelo brillante se funde con un flan aterciopelado que revela un delicado toque de mora, infundido con su jugoso y ligeramente ácido sabor. La combinación perfecta de textura cremosa y un rico sabor a frutas convierte a este postre en una encantadora sorpresa para tus sentidos. Perfecto para cualquier ocasión especial, el Flan de Mora Encantada no solo deleita el paladar, sino que también embriaga los sentidos con su espectacular presentación y sabor irresistible. ¡Déjate llevar por el encanto de las moras y disfruta de una dulce experiencia mágica!",
+            "is_private": false,
+            "slug": "flan-de-mora-encantada"
+        }
+    },
+    {
+        "model": "web.flan",
+        "pk": 3,
+        "fields": {
+            "name": "Flan de Cereza del Paraíso",
+            "image_url": "https://github.com/EniDev911/assets/blob/main/images/flans/flan3.jpg?raw=true",
+            "description": "Descubre el deleite celestial del Flan de Cereza del Paraíso, una exquisitez que lleva el postre a nuevas alturas. Este flan combina la textura cremosa y aterciopelada de un clásico flan con la intensa y vibrante dulzura de cerezas frescas. Cada bocado revela una capa de caramelo dorado que se derrite en la boca, seguida de un flan suave infundido con el jugoso sabor de cerezas maduras. En la cima, una generosa capa de salsa de cereza añade un toque de frescura y color que convierte a cada porción en un festín visual y gustativo. Perfecto para cualquier ocasión especial o simplemente para un capricho, el Flan de Cereza del Paraíso es un viaje de sabor que te hará sentir en un auténtico paraíso con cada cucharada. ¡Déjate cautivar por esta combinación divina y disfruta de un postre que es un verdadero sueño hecho realidad!",
+            "is_private": false,
+            "slug": "flan-de-cereza-del-paraiso"
+        }
+    },
+    {
+        "model": "web.flan",
+        "pk": 4,
+        "fields": {
+            "name": "Flan de Cielo de Mermelada",
+            "image_url": "https://github.com/EniDev911/assets/blob/main/images/flans/flan4.jpg?raw=true",
+            "description": "Viaja al paraíso con el Flan de Cielo de Mermelada, un postre que eleva el clásico flan a nuevas alturas de sabor y elegancia. Este flan de textura aterciopelada y rica se fusiona con una capa celestial de mermelada artesanal, elaborada con las frutas más frescas y jugosas. La suavidad del flan se complementa perfectamente con el toque dulce y ligeramente ácido de la mermelada, creando una experiencia de sabor que es nada menos que celestial. La mermelada, con su brillante color y su sabor intenso, se asienta delicadamente sobre el flan, añadiendo un contraste visual y gustativo que cautivará tus sentidos. Ideal para eventos especiales o para darte un capricho, el Flan de Cielo de Mermelada es una verdadera indulgencia que hará que cada bocado sea una celebración de sabor y textura. ¡Déjate llevar por este postre divino y disfruta de un pedacito de cielo en cada cucharada!",
+            "is_private": false,
+            "slug": "flan-de-cielo-de-mermelada"
+        }
+    },
+    {
+        "model": "web.flan",
+        "pk": 5,
+        "fields": {
+            "name": "Flan de Nube de Chocolate",
+            "image_url": "https://github.com/EniDev911/assets/blob/main/images/flans/flan5.jpg?raw=true",
+            "description": "Déjate envolver por la suavidad y el sabor indulgente del Flan de Nube de Chocolate, un postre que combina la elegancia del flan tradicional con el rico y decadente sabor del chocolate. Este flan, con su textura ligera y cremosa, se infunde con una generosa cantidad de chocolate puro, creando un equilibrio perfecto entre lo dulce y lo profundo. Cada cucharada te lleva a un cielo de sabor, donde la suavidad del flan se encuentra con la intensidad del chocolate, coronado por una ligera capa de caramelo que añade un toque de dulzura dorada. Ideal para los amantes del chocolate y los aficionados a los postres finos, el Flan de Nube de Chocolate es la forma perfecta de cerrar cualquier comida con un toque de lujo. ¡Sumérgete en esta nube de sabor y deja que cada bocado te transporte a un mundo de placer y sofisticación!",
+            "is_private": false,
+            "slug": "flan-de-nube-de-chocolate"
+        }
+    }
+]
