@@ -1,3 +1,11 @@
 {% extends "base.html" %}
-{% block title %}Bienvenido{% endblock %}
-{% block content %}Bienvenido{% endblock %}
+{% block title %}Bienvenido
+{% endblock %}
+{% block content %}
+    <h2>Bienvenido</h2>
+    {% for flan in flanes_privados %}
+        <div class="col-12 col-md-6 col-lg-3">
+            {% include "card.html" with name=flan.name image=flan.image_url desc=flan.description %}
+        </div>
+    {% endfor %}
+{% endblock %}
