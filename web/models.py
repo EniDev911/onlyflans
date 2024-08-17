@@ -20,6 +20,6 @@ class Flan(models.Model):
 
 class ContactForm(models.Model):
   contact_form_uuid = models.UUIDField(default=uuid.uuid4, editable=False)
-  contact_email = models.EmailField(max_length=100)
-  contact_name = models.CharField(max_length=64)
+  customer_email = models.EmailField(max_length=100)
+  customer_name = models.CharField(max_length=64)
   message = models.TextField()
