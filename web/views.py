@@ -28,4 +28,6 @@ def contacto(request):
     return render(request, 'contact.html', {
         'form': form
     })
-        
+
+def exito(request):
+    return render(request, 'success.html', {})
