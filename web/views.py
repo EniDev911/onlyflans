@@ -22,7 +22,7 @@ def contacto(request):
         form = ContactFormForm(request.POST)
         if form.is_valid():
             ContactForm(**form.cleaned_data).save()
-            return redirect('indice')
+            return redirect('exito')
     else:
         form = ContactFormForm()
     return render(request, 'contact.html', {
