@@ -1,5 +1,23 @@
 [
     {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$260000$s6InmOHqaktVxoeuJsc9V5$iuybvt/xfN0VCIDqPMPt9gWtLrmd+Mw0xpc8kzOYwyw=",
+            "last_login": null,
+            "is_superuser": true,
+            "username": "enidev911",
+            "first_name": "",
+            "last_name": "",
+            "email": "enidev911@gmail.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2024-08-16T23:26:03.278Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
         "model": "web.flan",
         "pk": 1,
         "fields": {
@@ -52,6 +70,17 @@
             "description": "Déjate envolver por la suavidad y el sabor indulgente del Flan de Nube de Chocolate, un postre que combina la elegancia del flan tradicional con el rico y decadente sabor del chocolate. Este flan, con su textura ligera y cremosa, se infunde con una generosa cantidad de chocolate puro, creando un equilibrio perfecto entre lo dulce y lo profundo. Cada cucharada te lleva a un cielo de sabor, donde la suavidad del flan se encuentra con la intensidad del chocolate, coronado por una ligera capa de caramelo que añade un toque de dulzura dorada. Ideal para los amantes del chocolate y los aficionados a los postres finos, el Flan de Nube de Chocolate es la forma perfecta de cerrar cualquier comida con un toque de lujo. ¡Sumérgete en esta nube de sabor y deja que cada bocado te transporte a un mundo de placer y sofisticación!",
             "is_private": false,
             "slug": "flan-de-nube-de-chocolate"
+        }
+    },
+    {
+        "model": "web.flan",
+        "pk": 6,
+        "fields": {
+            "name": "Dulce Éxtasis de Manjar y Cereza",
+            "image_url": "https://github.com/EniDev911/assets/blob/main/images/flans/flan6.svg?raw=true",
+            "description": "Embárcate en un viaje de indulgencia con el \"Dulce Éxtasis de Manjar y Cereza\", un flan que es la perfecta fusión entre la suavidad del manjar y el vibrante sabor de la cereza. Cada bocado revela una capa de manjar sedoso, que se funde con el delicado toque de la cereza en un caramelizado rubí. La textura cremosa del flan se complementa con un ligero crujido de caramelo dorado en la parte superior, mientras las cerezas frescas, ligeramente maceradas, añaden un contraste refrescante y afrutado. Este postre es una celebración de sabores intensos y sutiles, una delicia para los sentidos que transforma cada momento en una experiencia memorable.",
+            "is_private": false,
+            "slug": "dulce-extasis-de-manjar-y-cereza"
         }
     }
 ]
