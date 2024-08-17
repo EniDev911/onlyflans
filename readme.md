@@ -132,12 +132,12 @@ Crear el modelo ContactForm, generar y aplicar sus migraciones y agregar el mode
 Construir un formulario personalizado utilizando la clase Form y que contenga los atributos necesarios para recibir los datos.
 En la vista contacto, debemos realizar las validaciones correspondientes y crear un nuevo objeto del modelo ContactForm basado en el formulario.
 
-| Atributo       | Tipo              | Anotaciones     |
-| :------------- | :---------------- | :-------------- | --------------------------------------- |
-| ````           | contact_form_uuid | UUIDField       | default = uuid.uuidd4, editable = False |
-| customer_email | EmailField        |                 |
-| customer_name  | CharField         | max_length = 64 |
-| message        | TextField         |                 |
+|Atributo|Tipo|Anotaciones|
+|:------|:----|:---------|
+|contact_form_uuid|UUIDField|default=uuid.uuidd4, editable=False|
+|customer_email|EmailField||
+|customer_name|CharField|max_length=64|
+|message|TextField||
 
 Definición del modelo ContacForm, según el requerimiento:
 
