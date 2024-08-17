@@ -25,7 +25,6 @@ def contacto(request):
             return redirect('indice')
     else:
         form = ContactFormForm()
-    
     return render(request, 'contact.html', {
         'form': form
     })
