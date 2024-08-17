@@ -2,246 +2,279 @@
 
 ## REQUERIMIENTO 1
 
-Inicia una app de Django llamada web dentro del proyecto onlyflans y agrégala a la lista de aplicaciones instaladas, dentro de ella crea una carpeta templates que contenga un archivo llamado index.html que contenga la estrcutura `<html>`, `<header>` y `<body>`. Dentro del `<body>` escribe el texto “índice”. Crea 2 copias del archivo index.html, llamadas about.html y welcome.html y reemplace el texto de sus estructuras `<body>` por “acerca” y “bienvenido cliente” respectivamente.
-
-Aquí se crea la nueva app📦:
-
-```bash
-python manage.py startapp web
-```
-
-Aquí se registra la app en el proyecto:
+Crear modelo Flan, generar y aplicar sus migraciones y agregar el modelo al panel de administración. Agrega al menos 8 elementos de Flan.
 
 ```py
-# onlyflans/settings.py
-DEBUG = True
+# web/models.py
+from django.db import models
+import uuid # UUID aleatorio al crear instancia
 
-ALLOWED_HOSTS = []
-
-
-# Application definition
-
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'web'
-]
+class Flan(models.Model):
+flan_uuid = models.UUIDField(default=uuid.uuid4)
+name = models.CharField(max_length=50, null=False)
+description = models.TextField()
+image_url = models.URLField()
+slug = models.SlugField(max_length=50, unique=True, blank=True)
+is_private = models.BooleanField()
 ```
 
-Creamos las plantillas:
+Registramos el modelo en el panel administrativo.
 
-```bash
-mkdir -p web/templates
-touch web/templates/index.html
-touch web/templates/about.html
-touch web/templates/welcome.html
-```
+```py
+# web/admin.py
+from django.contrib import admin
+from .models import Flan # Importamos el modelo Flan.
 
-Nos quedaría la estructura de la siguiente forma en el explorador:
-
-```bash
-📂web
- └── 📂templates
-      ├── 📄about.html
-      ├── 📄index.html
-      └── 📄welcome.html
-```
-
-Escribimos contenido en la plantillas:
-
-```html
-<!-- templates/index.html -->
-<html>
-<body>
-<header><header>
-  Índice
-</body>
-</html>
-
-<!-- templates/about.html -->
-<html>
-<body>
-<header><header>
-  Acerca
-</body>
-</html>
-
-<!-- templates/Welcome.html -->
-<html>
-<body>
-<header><header>
-  Bienvenido cliente
-</body>
-</html>
+admin.site.register(Flan)
 ```
 
 ## REQUERIMIENTO 2
 
-Habilitar las 3 urls distintas con una plantilla básica que muestre solo texto, esto implica:
+Mostrar tus flanes recién creados al público. Agrégale el resultado de todos los Flanes existentes en tu sitio web como contexto a tu vista de la ruta “indice” e imprime los resultados a través de la plantilla index.html por medio de componentes cards de bootstrap, utilizando un ciclo for de las plantillas de django para mostrar cada uno de los Flan anteriormente creados.
+En la página “indice” se mostrarán solo los Flan cuyo atributo is_private es False.
+En la página “welcome”, se mostrarán solo los Flan cuyo atributo is_private es True.
 
-- Mostrar el texto “índice” en la ruta /
-- Mostrar el texto “acerca” en la ruta /acerca
-- Mostrar el texto “bienvenido cliente” en la ruta /bienvenido
+Enviamos el contexto al template para accederlo. Obtenemos todos los objetos (registros) desde la bd sqlite.
 
-Una vez realizado, ejecuta el sitio web con `python manage.py runserver`.
+```py
+web/views.py
+from django.shortcuts import render
+from .models import Flan
+
+def indice(request):
+flans = Flan.objects.all()
+return render(request, 'index.html', {
+'flans': flans
+})
+```
+
+```html
+<!-- web/templates/includes/card.html -->
+<div class="card shadow-sm mb-3 border">
+  <img src="{{ img }}" alt="{{ name }}" class="card-img-top" />
+  <div class="card-body">
+    <h5 class="card-title">{{ name }}</h5>
+    <p class="card-text">{{ desc }}</p>
+  </div>
+</div>
+```
+
+Utilizamos el fragmento del componente card de bootstrap y le pasamos los parámetros con with
+
+```html
+<!-- web/templates/pages/index.html -->
+{% extends "base.html" %} {% block content %}
+
+<h2>Índice</h2>
+<div class="container my-4">
+  <div class="row">
+    {% for flan in flans %}
+    <div class="col-12 col-md-6 col-lg-3">
+      {% include "card.html" with name=flan.name image=flan.image_url
+      desc=flan.description %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+```
+
+- Enviamos al contexto sólo aquellos flanes que su atributo is_private sea False.
+- Enviamos al contexto sólo aquellos flanes que su atributo is_private sea True.
 
 ```py
 # web/views.py
-from django.shortcuts import render
-
 def indice(request):
-    return render(request, 'index.html', {})
+  flanes_publicos = Flan.objects.filter(is_private=False)
+  return render(request, 'index.html', {
+    'flanes_publicos': flanes_publicos
+  })
 
 def acerca(request):
-    return render(request, 'about.html', {})
+  return render(request, 'about.html', {})
 
 def bienvenido(request):
-    return render(request, 'welcome.html', {})
+  flanes_privados = Flan.objects.filter(is_private=True)
+  return render(request, 'welcome.html', {
+    'flanes_privados': flanes_privados
+  })
 ```
 
-```py
-# onlyflans/urls.py
-from django.contrib import admin
-from django.urls import path
-from web.views import indice, acerca, bienvenido
+Recorremos los flanes públicos en el template index.html:
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', indice, name='indice'),
-    path('acerca', acerca, name='acerca'),
-    path('bienvenido', bienvenido, name='bienvenido'),
-]
+```html
+<!-- web/templates/pages/index.html -->
+{% for flan in flanes_publicos %}
+
+<div class="col-12 col-md-6 col-lg-3">
+  {% include "card.html" with name=flan.name image=flan.image_url
+  desc=flan.description %}
+</div>
+{% endfor %}
+```
+
+Recorremos los flanes privados en el template welcome.html:
+
+```html
+<!-- web/templates/pages/welcome.html -->
+{% for flan in flanes_privados %}
+<div class="col-12 col-md-6 col-lg-3">
+  {% include "card.html" with name=flan.name image=flan.image_url
+  desc=flan.description %}
+</div>
+{% endfor %}
 ```
 
 ## REQUERIMIENTO 3
 
-Crear una plantilla base llamada base.html que contenga los elementos comunes a todas las rutas necesarias para el sitio web, esto puede ser como en el caso anterior, simplemente un texto que identifique cada elemento, por ejemplo:
+Crear el modelo ContactForm, generar y aplicar sus migraciones y agregar el modelo al panel de administración de Django.
 
-- Mostrar el texto “índice” en el lugar donde iría el header
-- Mostrar el texto “navbar” en el lugar donde iría la barra de navegación
-- Mostrar el texto “footer” en el lugar donde iría el footer
+Construir un formulario personalizado utilizando la clase Form y que contenga los atributos necesarios para recibir los datos.
+En la vista contacto, debemos realizar las validaciones correspondientes y crear un nuevo objeto del modelo ContactForm basado en el formulario.
 
-Debes valerte de estructura como `<div>` para separar los distintos elementos y agregar un color de fondo para guiar mejor la estructura general.
+| Atributo       | Tipo              | Anotaciones     |
+| :------------- | :---------------- | :-------------- | --------------------------------------- |
+| ````           | contact_form_uuid | UUIDField       | default = uuid.uuidd4, editable = False |
+| customer_email | EmailField        |                 |
+| customer_name  | CharField         | max_length = 64 |
+| message        | TextField         |                 |
 
-```html
-<!-- templates/base.html -->
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <title>{% block title %}OnlyFlans{% endblock %}</title>
-  </head>
-  <body>
-    <div style="background: red">header</div>
-    <div style="background: yellow">navbar</div>
-    <div>contenido</div>
-    <div style="background: green">footer</div>
-  </body>
-</html>
-
-<!-- templates/index.html -->
-{% extends "base.html" %} {% block title %}Índice{% endblock %}
-
-<!-- templates/about.html -->
-{% extends "base.html" %} {% block title %}Acerca{% endblock %}
-
-<!-- templates/welcome.html -->
-{% extends "base.html" %} {% block title %} Bienvenido {% endblock %}
-```
-
-Visitamos las siguientes url:
-
-- 127.0.0.1:8000
-- 127.0.0.1:8000/bienvenido
-- 127.0.0.1:8000/acerca
-
-## REQUERIMIENTO 4
-
-Crear las vistas y plantillas personalizadas, añadiendo componentes de bootstrap que permitan crear un sitio más “atractivo” en cuanto al contenido, acercándose a lo requerido, para esto debemos realizar lo siguiente:
-
-“Instalar” bootstrap a través de la plantilla inicial de bootstrap en la plantilla base, complementando su estructura <body> con lo que ya existe en el archivo. Luego cambiamos el contenido de la estructura <title> por “Bienvenido a onlyflans”.
-Utilizar ya sea el sistema de grilla o la clase container al contenido de la web en el archivo base.html.
-
-```html
-<!-- templates/base.html -->
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}Bienvenido a OnlyFlans{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="sty…"/>
-  </head>
-  <body>
-    <div style="background: red">header</div>
-    <div style="background: yellow">navbar</div>
-    <div>contenido</div>
-    <div style="background: green">footer</div>
-    <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js></script>
-  </body>
-</html>
-```
-
-Para una mejor organización, incluiremos, los siguientes directorios en la lista para que estén disponible en el sistema de plantilla.
+Definición del modelo ContacForm, según el requerimiento:
 
 ```py
-# onlyflans/settings.py
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-                 os.path.join(BASE_DIR, 'web/templates/includes/'),
-                 os.path.join(BASE_DIR, 'web/templates/pages/')
-                 ],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-               …
-            ],
-        },
-    },
-]
+# web/models.py
+class ContactForm(models.Model):
+  contact_form_uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+  customer_email = models.EmailField()
+  customer_name = models.CharField(max_length=64)
+  message = models.TextField()
+```
+
+Registramos el modelo en el panel administrativo:
+
+```py
+# web/admin.py
+from django.contrib import admin
+from .models import Flan, ContactForm
+
+admin.site.register(Flan)
+admin.site.register(ContactForm)
+```
+
+Definimos un formulario personalizado, utilizando la clase Form:
+
+```py
+# web/forms.py
+from django import forms
+
+class ContactFormForm(forms.Form):
+  customer_email = forms.EmailField(label="Correo")
+  customer_name = forms.CharField(max_length=64, label="Nombre")
+  message = forms.CharField(label="Mensaje")
+```
+
+Importamos el formulario, y lo pasamos al contexto del template:
+
+```py
+# web/views.py
+from django.shortcuts import render, redirect
+from .forms import ContactFormForm
+from .models import ContactForm, Flan
+
+def contacto(request):
+  if request.method == "POST":
+    form = ContactFormForm(request.POST)
+    if form.is_valid(): # Procesamos los datos y creamos un nuevo objeto en la bd
+      ContactForm(**form.cleaned_data).save()
+      return redirect('exito') # 👈 Pronto configuraremos esta página
+  else:
+    form = ContactFormForm()
+    return render(request, 'contact.html', {
+      'form': form
+    })
 ```
 
 ```html
-<!-- web/templates/includes/navbar.html -->
+<!-- web/templates/pages/contact.html -->
+{% extends 'base.html' %} {% block content %}
+
+<form method="post">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit">Enviar</button>
+</form>
+{% endblock %}
+```
+
+Agregamos la url a la barra de navegación:
+
+```html
+templates/includes/navbar.html
+
 <nav class="navbar navbar-expand-lg bg-body">
   <div class="container-fluid">
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-target="#navbar"
-      data-bs-toggle="collapse"
-      aria-controls="navbar"
-      aria-exp="…"
-    >
+    <button class="navbar-toggler" type="button" data-bs-target="#navbar" data-bs-toggle="collapse">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbar">
       <div class="navbar-nav me-auto mb-2 mb-lg-0">
-        <a class="nav-link" aria-current="page" href="{% url 'indice' %}"
-          >Índice</a
-        >
-        <a class="nav-link" href="{% url 'acerca' %}">Acerca</a>
-        <a class="nav-link" href="{% url 'bienvenido' %}">Bienvenido</a>
+        <a class="nav-link" aria-current="page" href="{% url "indice" %}">Índice</a>
+        <a class="nav-link" href="{% url "acerca" %}">Acerca</a>
+        <a class="nav-link" href="{% url "bienvenido" %}">Bienvenido</a>
+        <a class="nav-link" href="{% url "contacto" %}">Contacto</a>
       </div>
     </div>
   </div>
 </nav>
-
-<!-- web/templates/base.html -->
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    ...
-  </head>
-  <body>
-    ... {% include "navbar.html" %}
-  </body>
-</html>
 ```
 
-[Presentación](https://docs.google.com/presentation/d/e/2PACX-1vSaD7q6_fh7WwCbg_WvvSEe-JDYyaPbstMjl00M2cL4GxWTCZJ2SuzS83I7HB_JfS1BrYhIdtuS-840/embed?start=false&loop=false&delayms=3000&slide=id.g2eb73829bee_2_17)
+Finalmente, configuramos la URL en urls.py para que la vista sea accesible:
+
+```py
+onlyflans/urls.py
+from django.contrib import admin
+from django.urls import path
+from web.views import indice, acerca, bienvenido, contacto
+
+urlpatterns = [
+  path('admin/', admin.site.urls),
+  path('', indice, name='indice'),
+  path('acerca', acerca, name='acerca'),
+  path('bienvenido', bienvenido, name='bienvenido'),
+  path('contacto', contacto, name='contacto'),
+]
+```
+
+Definimos una vista para renderizar una plantilla de exito:
+
+```py
+# web/views.py
+def exito(request):
+  return render(request, 'success.html', {})
+
+```
+
+Configuramos otra URL en urls.py para que la vista sea accesible:
+
+```py
+onlyflans/urls.py
+from web.views import ..., exito
+
+urlpatterns = [
+...
+path('exito', exito, name='exito'),
+]
+```
+
+Añadimos contenido a la plantilla:
+
+```html
+<!-- web/templates/pages/success.html -->
+{% extends "base.html" %} {% block content %}
+
+<div class="my-5 text-center fs-3">
+  Gracias por contactarte con OnlyFlans<br />
+  te responderemos en breve<br />
+  <a href="{% url 'indice' %}" class="btn btn-primary">Volver a inicio</a>
+</div>
+{% endblock %}
+```
