@@ -1,18 +1,30 @@
-<form method="post" action="{% url 'login' %}" class="card shadow-sm">
-  {% csrf_token %}
-  <div class="card-header"><h2>Iniciar Sesión</h2></div>
-    {% if form.errors %}
-      <div class="rounded-0 alert alert-warning alert-dismissible fade show">
-          Usuario o password incorrecto
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+{% extends "base.html" %}
+{% load form_extras %}
+{% block content %}
+<div class="col-12 col-md-6 mx-auto my-5">
+  <form method="post" action="{% url 'login' %}" class="card shadow-sm">
+    {% csrf_token %}
+    <div class="card-header"><h2 align="center">Iniciar Sesión</h2></div>
+      {% if form.errors %}
+        <div class="rounded-0 alert alert-warning alert-dismissible fade show">
+            Usuario o password incorrecto
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endif %}
+      {% if next %}
+        {% if user.is_authenticated %}<p>No tienes acceso a este recurso</p>{% endif %}
+      {% endif %}
+      <div class="card-body p-3">
+        <div class="mb-3">
+          {{ form.username.label_tag }}
+          {{ form.username |add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+          {{ form.password.label_tag }}
+          {{ form.password|add_class:"form-control" }}
+        </div>
+        <button type="submit" class="btn btn-success">Iniciar sesión</button>
       </div>
-    {% endif %}
-    {% if next %}
-      {% if user.is_authenticated %}<p>No tienes acceso a este recurso</p>{% endif %}
-    {% endif %}
-    <div class="card-body p-3">
-      <div class="mb-3">{{ form.username.label_tag }}{{ form.username }}</div>
-      <div class="mb-3">{{ form.password.label_tag }}{{ form.password }}</div>
-      <button type="submit" class="btn btn-success">Iniciar sesión</button>
-    </div>
-</form>
+  </form>
+</div>
+{% endblock  %}
