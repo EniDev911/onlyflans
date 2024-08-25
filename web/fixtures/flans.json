@@ -82,5 +82,16 @@
             "is_private": false,
             "slug": "dulce-extasis-de-manjar-y-cereza"
         }
+    },
+    {
+        "model": "web.flan",
+        "pk": 7,
+        "fields": {
+            "name": "Flan Dulce Encanto",
+            "image_url": "https://github.com/EniDev911/assets/blob/main/images/flans/flan7.jpg?raw=true",
+            "description": "Es un flan suave y cremoso con una base de manjar (dulce de leche) que se fusiona con el rico sabor del chocolate. La capa superior de manjar aporta un toque caramelizado, mientras que el chocolate, en su forma más delicada y refinada, se mezcla perfectamente con el flan para crear una experiencia irresistible. Ideal para quienes buscan un postre que combine lo mejor de ambos mundos en una deliciosa y seductora mezcla.",
+            "is_private": false,
+            "slug": "flan-dulce-encanto"
+        }
     }
 ]
