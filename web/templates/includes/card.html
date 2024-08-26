@@ -2,6 +2,6 @@
     <img src="{{ image }}" alt="{{ name }}" class="card-img-top">
     <div class="card-body">
         <h5 class="card-title">{{ name }}</h5>
-        <p class="card-text">{{ desc }}</p>
+        <p class="card-text">{{ desc | truncatechars:15 }}</p>
     </div>
 </div>
