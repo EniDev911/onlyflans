@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 {% block title %}Índice{% endblock %}
-
+{% block hero %}
+    <h2>Nuestros productos</h2>
+		<p>Onlyflans nace el año 2021 buscando entregar flanes de calidad</p>
+		<a href="{% url 'acerca' %}" class="btn btn-outline-dark">Conocer más</a>
+{% endblock %}
 {% block content %}
-<h2>Index</h2>
-<div class="container">
-	<div class="row">
-		{% for flan in flanes_publicos %}
-		<div class="col-12 col-md-6 col-lg-3">
-			{% include 'card.html' with image=flan.image_url name=flan.name desc=flan.description  %}
-		</div>
-		{% endfor %}
+<div class="row my-5">
+	{% for flan in flanes_publicos %}
+	<div class="col-12 col-md-6 col-lg-3">
+		{% include 'card.html' with image=flan.image_url name=flan.name desc=flan.description  %}
 	</div>
+	{% endfor %}
 </div>
 {% endblock %}
