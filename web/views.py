@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import ContactFormForm
 from .models import ContactForm, Flan
@@ -33,3 +33,7 @@ def contacto(request):
 
 def exito(request):
     return render(request, 'success.html', {})
+
+def detalle(request, id):
+    flan = get_object_or_404(Flan, id=id)
+    return render(request, 'detail.html', {'flan': flan})
