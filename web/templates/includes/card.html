@@ -1,7 +1,10 @@
 <div class="card shadow-sm mb-3 border">
-    <img src="{{ image }}" alt="{{ name }}" class="card-img-top">
+    <img src="{{ flan.image_url }}" alt="{{ flan.name }}" class="card-img-top">
     <div class="card-body">
-        <h5 class="card-title">{{ name }}</h5>
-        <p class="card-text">{{ desc | truncatechars:15 }}</p>
+        <h5 class="card-title">{{ flan.name }}</h5>
+        <p class="card-text">{{ flan.description | truncatechars:30 }}</p>
+        <a href="{% url 'detalle' flan.id %}" class="btn btn-outline-dark">
+            Ver más
+        </a>
     </div>
 </div>
