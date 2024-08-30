@@ -42,6 +42,6 @@ class UserRegistrationForm(forms.ModelForm):
 		password_confirm = cleaned_data.get('password_confirm')
 
 		if password and password_confirm and password != password_confirm:
-			raise forms.ValidationError("Las contraseñas mo coinciden")
+			raise forms.ValidationError("Las contraseñas no coinciden")
 		
 		return cleaned_data
