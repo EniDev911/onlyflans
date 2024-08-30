@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+ <div class="container my-5">
+    <div class="row">
+      <div class="col-12 col-md-6 mx-auto">
+        <form action="{% url 'registrar'%}" method="POST" class="card p-3">
+          {% csrf_token %}
+          {{ form }}
+          <button type="submit">Registrarse</button>
+        </form>
+      </div>
+    </div>
+ </div>
+{% endblock  %}
