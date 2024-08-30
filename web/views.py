@@ -50,5 +50,4 @@ def registrar_usuario(request):
             return redirect('indice')
     else:
         form = UserRegistrationForm()
-    
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'registration/register.html', {'form': form})
